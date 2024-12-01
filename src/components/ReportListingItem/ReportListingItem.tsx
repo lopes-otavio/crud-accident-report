@@ -16,7 +16,7 @@ export default function ReportListingItem({ report, onEdit, onDelete }: Props) {
 			<span>{report.stolenVechile.vehicleType}</span>
 			<span>{report.stolenVechile.vehicleBrand}</span>
 			<span>{report.incidentLocal.city}</span>
-			<span>{new Date(report.incidentDate).toLocaleDateString()}</span>
+			<span>{report.incidentDate}</span>
 			<button onClick={() => onEdit(report.id)} className="edit-button">
 				<Pencil size={18} />
 			</button>

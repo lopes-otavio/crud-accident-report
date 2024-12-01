@@ -1,93 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AccidentReport } from "../../interfaces";
 import ReportListingItem from "../ReportListingItem/ReportListingItem";
 import For from "../For/For";
 import { PlusCircle, ClipboardListIcon } from "lucide-react";
+import { getAllReports } from "../../services/reportServices";
 
 import "./reportListing.scss";
 
 export default function ReportListing() {
 	const [searchTerm, setSearchTerm] = useState("");
+	const [reports, setReports] = useState<AccidentReport[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [currentPage, setCurrentPage] = useState(1);
+	const itemsPerPage = 20;
 
-	const reports: AccidentReport[] = [
-		{
-			id: "1",
-			incidentDate: "2023-05-15",
-			incidentPeriod: "Morning",
-			incidentLocal: {
-				street: "Main St",
-				number: "123",
-				neighborhood: "Downtown",
-				city: "New York",
-				state: "NY",
-			},
-			stolenVechile: {
-				fabricationYear: "2020",
-				vehicleColor: "Red",
-				vehicleBrand: "Toyota",
-				vehicleType: "Sedan",
-				vehicleRegistration: {
-					registration: "",
-					vehicleState: "",
-					vehicleCity: "",
-				},
-			},
-		},
-		{
-			id: "2",
-			incidentDate: "2023-05-15",
-			incidentPeriod: "Morning",
-			incidentLocal: {
-				street: "Main St",
-				number: "123",
-				neighborhood: "Downtown",
-				city: "New York",
-				state: "NY",
-			},
-			stolenVechile: {
-				fabricationYear: "2020",
-				vehicleColor: "Red",
-				vehicleBrand: "ddd",
-				vehicleType: "ccc",
-				vehicleRegistration: {
-					registration: "",
-					vehicleState: "",
-					vehicleCity: "",
-				},
-			},
-		},
-		{
-			id: "3",
-			incidentDate: "2023-05-15",
-			incidentPeriod: "Morning",
-			incidentLocal: {
-				street: "Main St",
-				number: "123",
-				neighborhood: "Downtown",
-				city: "New York",
-				state: "NY",
-			},
-			stolenVechile: {
-				fabricationYear: "2020",
-				vehicleColor: "Red",
-				vehicleBrand: "aaa",
-				vehicleType: "bbb",
-				vehicleRegistration: {
-					registration: "",
-					vehicleState: "",
-					vehicleCity: "",
-				},
-			},
-		},
-	];
+	useEffect(() => {
+		async function getReports() {
+			try {
+				const fetchedReports = await getAllReports();
+				setReports(fetchedReports);
+			} catch (error) {
+				console.error("Erro ao buscar relatórios:", error);
+			} finally {
+				setLoading(false);
+			}
+		}
 
-	const handleEdit = (id: string) => {
-		console.log(`Editing report with id: ${id}`);
-	};
-
-	const handleDelete = (id: string) => {
-		console.log(`Deleting report with id: ${id}`);
-	};
+		getReports();
+	}, []);
 
 	const filteredReports = reports.filter((report) => {
 		const searchLower = searchTerm.toLowerCase();
@@ -99,6 +39,26 @@ export default function ReportListing() {
 		);
 	});
 
+	const totalPages = Math.ceil(filteredReports.length / itemsPerPage);
+	const startIndex = (currentPage - 1) * itemsPerPage;
+	const endIndex = startIndex + itemsPerPage;
+	const currentReports = filteredReports.slice(startIndex, endIndex);
+
+	const goToNextPage = () => {
+		if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+	};
+
+	const goToPreviousPage = () => {
+		if (currentPage > 1) setCurrentPage(currentPage - 1);
+	};
+
+	const handleEdit = (id: string) => {
+		console.log(`Editing report with id: ${id}`);
+	};
+
+	const handleDelete = (id: string) => {
+		console.log(`Deleting report with id: ${id}`);
+	};
 	return (
 		<div className="report-container">
 			<div className="report-header">
@@ -127,27 +87,54 @@ export default function ReportListing() {
 			</div>
 
 			<div className="report-listing">
-				<div className="header">
-					<span>ID</span>
-					<span>Vehicle Type</span>
-					<span>Vehicle Brand</span>
-					<span>City</span>
-					<span>Incident Date</span>
-					<span className="action">Edit</span>
-					<span className="action">Delete</span>
-				</div>
-				<For
-					items={filteredReports}
-					render={(report: AccidentReport, index: number) => (
-						<ReportListingItem
-							key={`${report.id}-${index}`}
-							report={report}
-							onEdit={handleEdit}
-							onDelete={handleDelete}
+				{loading ? (
+					<div className="loading">Carregando relatórios...</div>
+				) : (
+					<>
+						<div className="header">
+							<span>ID</span>
+							<span>Vehicle Type</span>
+							<span>Vehicle Brand</span>
+							<span>City</span>
+							<span>Incident Date</span>
+							<span className="action">Edit</span>
+							<span className="action">Delete</span>
+						</div>
+						<For
+							items={currentReports}
+							render={(report: AccidentReport, index: number) => (
+								<ReportListingItem
+									key={`${report.id}-${index}`}
+									report={report}
+									onEdit={handleEdit}
+									onDelete={handleDelete}
+								/>
+							)}
+							fallback={
+								<div className="fallback">Nenhum item encontrado...</div>
+							}
 						/>
-					)}
-					fallback={<div className="fallback">Nenhum item encontrado...</div>}
-				/>
+						<div className="pagination-controls">
+							<button
+								onClick={goToPreviousPage}
+								disabled={currentPage === 1}
+								className="pagination-button"
+							>
+								Anterior
+							</button>
+							<span>
+								Página {currentPage} de {totalPages}
+							</span>
+							<button
+								onClick={goToNextPage}
+								disabled={currentPage === totalPages}
+								className="pagination-button"
+							>
+								Próxima
+							</button>
+						</div>
+					</>
+				)}
 			</div>
 		</div>
 	);
