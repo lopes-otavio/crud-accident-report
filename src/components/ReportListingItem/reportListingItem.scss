@@ -1,0 +1,53 @@
+.report-item {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto auto;
+	gap: 1rem;
+	align-items: center;
+	padding: 1rem 1.5rem;
+	border-radius: 12px;
+	background-color: #f8f7fa;
+	margin-block: 0.5rem;
+	transition: all 0.2s ease;
+	position: relative;
+
+	&:hover {
+		background-color: #f3f0f9;
+		transform: translateY(-1px);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	}
+
+	&:hover::before {
+		border-color: #8b5cf6;
+	}
+
+	span {
+		font-size: 0.875rem;
+		color: #4b5563;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.edit-button,
+	.delete-button {
+		padding: 0.5rem 1rem;
+		border: none;
+		border-radius: 6px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		background: transparent;
+		color: #6b7280;
+
+		&:hover {
+			background-color: rgba(139, 92, 246, 0.1);
+			color: #8b5cf6;
+		}
+	}
+
+	.delete-button {
+		&:hover {
+			background-color: rgba(239, 68, 68, 0.1);
+			color: #ef4444;
+		}
+	}
+}
