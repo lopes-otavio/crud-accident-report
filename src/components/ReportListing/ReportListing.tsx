@@ -3,7 +3,7 @@ import { AccidentReport } from "../../interfaces";
 import ReportListingItem from "../ReportListingItem/ReportListingItem";
 import For from "../For/For";
 import { PlusCircle, ClipboardListIcon } from "lucide-react";
-import { getAllReports } from "../../services/reportServices";
+import { deleteReport, getAllReports } from "../../services/reportServices";
 
 import "./reportListing.scss";
 
@@ -12,7 +12,7 @@ export default function ReportListing() {
 	const [reports, setReports] = useState<AccidentReport[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
-	const itemsPerPage = 20;
+	const itemsPerPage = 15;
 
 	useEffect(() => {
 		async function getReports() {
@@ -56,8 +56,15 @@ export default function ReportListing() {
 		console.log(`Editing report with id: ${id}`);
 	};
 
-	const handleDelete = (id: string) => {
-		console.log(`Deleting report with id: ${id}`);
+	const handleDelete = async (id: string) => {
+		try {
+			await deleteReport(id);
+			setReports((prevReports) =>
+				prevReports.filter((report) => report.id !== id)
+			);
+		} catch (error) {
+			console.error(`Erro ao deletar o relatório com ID ${id}:`, error);
+		}
 	};
 	return (
 		<div className="report-container">
@@ -93,12 +100,12 @@ export default function ReportListing() {
 					<>
 						<div className="header">
 							<span>ID</span>
-							<span>Vehicle Type</span>
-							<span>Vehicle Brand</span>
-							<span>City</span>
-							<span>Incident Date</span>
-							<span className="action">Edit</span>
-							<span className="action">Delete</span>
+							<span>Tipo Veículo</span>
+							<span>Marca Veículo</span>
+							<span>Cidade</span>
+							<span className="center">Data </span>
+							<span className="action">Editar</span>
+							<span className="action">Deletar</span>
 						</div>
 						<For
 							items={currentReports}

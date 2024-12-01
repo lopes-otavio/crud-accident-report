@@ -1,6 +1,6 @@
 .report-item {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto auto;
+	grid-template-columns: 1fr 2fr 2fr 1fr 1fr auto auto;
 	gap: 1rem;
 	align-items: center;
 	padding: 1rem 1.5rem;
@@ -26,6 +26,10 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+
+		&.center {
+			text-align: center;
+		}
 	}
 
 	.edit-button,

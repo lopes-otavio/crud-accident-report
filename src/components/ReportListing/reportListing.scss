@@ -88,7 +88,7 @@
 
 	.header {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto auto;
+		grid-template-columns: 1fr 2fr 2fr 1fr 1fr auto auto;
 		gap: 1rem;
 		align-items: center;
 		padding: 1rem 1.5rem;
@@ -100,9 +100,13 @@
 			font-size: 0.875rem;
 			font-weight: 500;
 
+			&.center {
+				text-align: center;
+			}
+
 			&.action {
 				text-align: center;
-				padding-inline: 0.7rem;
+				padding-inline: 0.4rem;
 			}
 		}
 	}
