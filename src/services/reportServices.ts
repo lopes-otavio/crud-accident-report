@@ -12,6 +12,17 @@ export async function getAllReports(): Promise<AccidentReport[]> {
 	}
 }
 
+export async function createReport(
+	report: AccidentReport
+): Promise<AccidentReport[]> {
+	try {
+		return await axios.post(`${baseUrl}/accident-reports`, report);
+	} catch (error) {
+		console.error(`Erro ao criar relatório`, error);
+		throw error;
+	}
+}
+
 export async function deleteReport(reportId: string): Promise<void> {
 	try {
 		await axios.delete(`${baseUrl}/accident-reports/${reportId}`);

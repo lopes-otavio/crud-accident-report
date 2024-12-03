@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AccidentReport } from "../../interfaces";
 import ReportListingItem from "../ReportListingItem/ReportListingItem";
 import For from "../For/For";
@@ -8,6 +9,7 @@ import { deleteReport, getAllReports } from "../../services/reportServices";
 import "./reportListing.scss";
 
 export default function ReportListing() {
+	const navigate = useNavigate();
 	const [searchTerm, setSearchTerm] = useState("");
 	const [reports, setReports] = useState<AccidentReport[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -56,6 +58,10 @@ export default function ReportListing() {
 		console.log(`Editing report with id: ${id}`);
 	};
 
+	const handleCreate = () => {
+		navigate("/create-report");
+	};
+
 	const handleDelete = async (id: string) => {
 		try {
 			await deleteReport(id);
@@ -83,10 +89,7 @@ export default function ReportListing() {
 							className="search-input"
 						/>
 					</div>
-					<button
-						className="search-button"
-						onClick={() => console.log("criando novo boletim")}
-					>
+					<button className="search-button" onClick={handleCreate}>
 						Criar Boletim
 						<PlusCircle size={20} />
 					</button>
