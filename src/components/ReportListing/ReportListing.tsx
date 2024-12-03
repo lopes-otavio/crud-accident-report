@@ -37,7 +37,8 @@ export default function ReportListing() {
 			report.id.toLowerCase().includes(searchLower) ||
 			report.stolenVechile.vehicleType.toLowerCase().includes(searchLower) ||
 			report.stolenVechile.vehicleBrand.toLowerCase().includes(searchLower) ||
-			report.incidentLocal.city.toLowerCase().includes(searchLower)
+			report.incidentLocal.city.toLowerCase().includes(searchLower) ||
+			report.incidentPeriod.toLocaleLowerCase().includes(searchLower)
 		);
 	});
 
@@ -77,13 +78,13 @@ export default function ReportListing() {
 			<div className="report-header">
 				<div className="logo">
 					<ClipboardListIcon className="logo-icon" />
-					<h1>Reports</h1>
+					<h1>Ocorrências</h1>
 				</div>
 				<div className="search-container">
 					<div className="search-input-wrapper">
 						<input
 							type="text"
-							placeholder="Search by ID, Vehicle Type, Brand, or City..."
+							placeholder="Pesquise por ID, veículo, marca, ou cidade..."
 							value={searchTerm}
 							onChange={(e) => setSearchTerm(e.target.value)}
 							className="search-input"
@@ -106,7 +107,7 @@ export default function ReportListing() {
 							<span>Tipo Veículo</span>
 							<span>Marca Veículo</span>
 							<span>Cidade</span>
-							<span className="center">Data </span>
+							<span>Período </span>
 							<span className="action">Editar</span>
 							<span className="action">Deletar</span>
 						</div>
