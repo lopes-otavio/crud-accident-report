@@ -19,9 +19,12 @@ export default function CreateReport() {
 		setFormData((prevData) => {
 			const newData = { ...prevData };
 			if (name.startsWith("suitors") && typeof index === "number") {
-				const [, field] = name.split(".");
+				const [, suitorProperty] = name.split(".");
 				newData.suitors = [...(newData.suitors || [])];
-				newData.suitors[index] = { ...newData.suitors[index], [field]: value };
+				newData.suitors[index] = {
+					...newData.suitors[index],
+					[suitorProperty]: value,
+				};
 			} else {
 				const keys = name.split(".");
 				let current: any = newData;
