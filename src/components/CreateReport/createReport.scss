@@ -67,11 +67,12 @@
 			}
 
 			.suitor-row {
-				position: relative;
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 1rem 2.5rem;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1rem;
+				align-items: flex-end;
 				margin-bottom: 1rem;
+				padding: 1rem;
 				background-color: #f9fafb;
 				border-radius: 8px;
 
@@ -81,22 +82,18 @@
 				}
 
 				.remove-suitor {
+					background: none;
 					border: none;
-					background: #dc2626;
-					color: #fff;
+					color: #ef4444;
 					cursor: pointer;
 					padding: 0.5rem;
 					display: flex;
 					align-items: center;
 					justify-content: center;
 					transition: all 0.2s ease;
-					position: absolute;
-					right: -50px;
-					bottom: 5px;
-					border-radius: 8px;
 
 					&:hover {
-						background-color: #c72525;
+						color: #dc2626;
 					}
 				}
 			}
@@ -122,9 +119,9 @@
 		}
 
 		.form-row {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 1rem 2.5rem;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1rem;
 			margin-bottom: 1rem;
 		}
 

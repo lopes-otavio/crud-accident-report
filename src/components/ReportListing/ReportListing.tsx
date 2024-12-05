@@ -56,7 +56,7 @@ export default function ReportListing() {
 	};
 
 	const handleEdit = (id: string) => {
-		console.log(`Editing report with id: ${id}`);
+		navigate(`/edit-report/${id}`);
 	};
 
 	const handleCreate = () => {

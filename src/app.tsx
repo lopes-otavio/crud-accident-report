@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import ReportListing from "./components/ReportListing/ReportListing";
 import CreateReport from "./components/CreateReport/CreateReport";
+import EditReport from "./components/EditReport/EditReport";
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 				<Route path="/" element={<Navigate to="/reports" replace />} />
 				<Route path="/reports" element={<ReportListing />} />
 				<Route path="/create-report" element={<CreateReport />} />
+				<Route path="/edit-report/:id" element={<EditReport />} />
 			</Routes>
 		</Router>
 	);
