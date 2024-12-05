@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Plus, X } from "lucide-react";
 import "./ReportForm.scss";
 import { AccidentReport } from "../../interfaces";
-import { dateMask } from "../pipes/dateMask";
+import { dateMask } from "../../pipes/dateMask";
 
 interface ReportFormProps {
 	initialData: AccidentReport;
